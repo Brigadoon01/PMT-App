@@ -10,7 +10,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
+      // await axios.post('http://localhost:5000/api/auth/register', { username, email, password });
       alert('Signup successful!');
       // Redirect to login
       window.location.href = '/login';
@@ -61,7 +61,7 @@ const Signup = () => {
               required
             />
           </div>
-          <button type="submit" className='border py-2 px-4 mt-6 rounded-md bg-slate-300 transition hover:bg-slate-500'>Signup</button>
+          <button type="submit" onClick={handleSignup} className='border py-2 px-4 mt-6 rounded-md bg-slate-300 transition hover:bg-slate-500'>Signup</button>
         </FormControl>
       </div>
     </div>
