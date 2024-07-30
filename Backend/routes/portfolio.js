@@ -19,7 +19,7 @@ router.get('/prices', authMiddleware, async (req, res) => {
 });
 
 router.get('/analytics', authMiddleware, async (req, res) => {
-  // Placeholder data; replace with actual portfolio analytics logic
+  // Placeholder data; will replace with actual portfolio analytics logic
   const portfolioAnalytics = {
     totalValue: 10000,
     totalGainLoss: 500,

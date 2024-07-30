@@ -1,34 +1,43 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create the context
 const ThemeContext = createContext();
 
-// Create a custom hook to use the ThemeContext
-export const useTheme = () => useContext(ThemeContext);
+const themes = {
+  light: {
+    background: 'bg-white',
+    text: 'text-black',
+    border: 'border-black'
+  },
+  dark: {
+    background: 'bg-gray-800',
+    text: 'text-white',
+    border: 'border-white'
+  }
+};
 
-// Theme provider component
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light'); // Default theme is light
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setTheme(storedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  const themeStyles = theme === 'light'
-    ? {
-        background: 'bg-white',
-        text: 'text-gray-900',
-        border: 'border-gray-200',
-      }
-    : {
-        background: 'bg-gray-900',
-        text: 'text-gray-100',
-        border: 'border-gray-700',
-      };
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, themeStyles }}>
+    <ThemeContext.Provider value={{ theme, themeStyles: themes[theme], toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
+
+export const useTheme = () => useContext(ThemeContext);
